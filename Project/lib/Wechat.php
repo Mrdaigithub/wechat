@@ -1,14 +1,17 @@
 <?php
+require dirname(__FILE__).'/../common/tools.php';
+require dirname(__FILE__).'/../config/wechatConfig.php';
 
 class Wechat{
     public $dataObj;
     private $toUserName;
     private $fromUserName;
     private $time;
+    public $accessToken;
 
     function __construct(){
+        $this->accessToken = $this->getAccessToken(APP_ID,APPSECRET);
         $this->dataObj = simplexml_load_string(file_get_contents('php://input'),'SimpleXMLElement',LIBXML_NOCDATA);
-        $this->time = time();
     }
 
     /**
@@ -41,7 +44,23 @@ class Wechat{
      * @return mixed
      */
     public function getAccessToken($appid,$appsecret){
-        return curl('get',"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret",null);
+        $path = dirname(__FILE__);
+//        判断accessToken文件是否存在
+        if (!file_exists($path.'/../data/access_token.json')){
+//            获取accessToken并存入数据
+            $data = json_decode(curl('get',"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret",null));
+            $data->date = time();
+            file_put_contents($path.'/../data/access_token.json',json_encode($data));
+        }
+        $data = json_decode(file_get_contents($path.'/../data/access_token.json'));
+        if ((time() - $data->date) >= $data->expires_in){
+//            获取accessToken并存入数据
+            $data = json_decode(curl('get',"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret",null));
+            $data->date = time();
+            file_put_contents($path.'/../data/access_token.json',json_encode($data));
+        }
+        $data = json_decode(file_get_contents($path.'/../data/access_token.json'));
+        return $data->access_token;
     }
 
     /**
@@ -50,7 +69,7 @@ class Wechat{
      * @return mixed
      */
     public function createMenu($data){
-        return curl('post',"https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".ACCESS_TOKEN,$data);
+        return curl('post',"https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$this->accessToken,$data);
     }
 
     /**
@@ -115,12 +134,11 @@ class Wechat{
 
     /**
      * 获取用户基本信息
-     * @param $accessToken
      * @param $openid
      * @return mixed
      */
-    public function getUserinfo($accessToken,$openid){
-        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$accessToken&openid=$openid&lang=zh_CN ";
+    public function getUserinfo($openid){
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$this->accessToken."&openid=$openid&lang=zh_CN";
         return curl('get',$url,null);
     }
 }

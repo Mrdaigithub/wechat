@@ -70,7 +70,7 @@ gulp.task('sass', ()=>{
         .pipe(rename({suffix: '.min'}))
 
         // 输出
-        .pipe(gulp.dest('./Project/Public/Css'));
+        .pipe(gulp.dest('./Project/public/css'));
 });
 
 // js处理
@@ -85,14 +85,14 @@ gulp.task('babel', () => {
         // 压缩js
         .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('./Project/Public/Js'));
+        .pipe(gulp.dest('./Project/public/js'));
 });
 
 // html处理
 gulp.task('minifyHtml', ()=>{
     gulp.src('./src/*.html')
     .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest('./Project/Template'))
+    .pipe(gulp.dest('./Project/template'))
 });
 
 // 静态服务器自动刷新

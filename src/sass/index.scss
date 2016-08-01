@@ -1,387 +1,359 @@
-body,main,main .prize>.pull-right .prizeBtn {
-  box-sizing: border-box;
-}
-
-body {
+body{
   overflow: hidden;
-  padding: 1.25rem 0;
+  box-sizing: border-box;
   width: 100vw;
   height: 100vh;
+  padding:(20rem/16) 0;
   cursor: default;
 }
-
-header h1 {
-  font-size: 2.5rem;
+header{
+  h1{
+    font-size: (40rem/16);
+  }
 }
 
-main {
+main{
   width: 80vw;
-  height: 80vh;
-  background-color: rgba(0,0,0,.4);
-}
-
-main .signIn {
-  padding: 1.875rem;
-}
-
-main .signIn header {
-  font-size: 1.5rem;
-}
-
-main .signIn header span {
-  display: inline-block;
-  margin-left: .625rem;
-  padding: 0 1.5625rem;
-  background-color: rgba(0,0,0,.9);
-  vertical-align: middle;
-  font-size: 1rem;
-  line-height: 1.75rem;
-}
-
-main .signIn ul {
-  overflow-y: scroll;
-  height: 70vh;
-}
-
-main .signIn ul li {
-  display: inline-block;
-  margin: 2vh 0;
-  width: 16.4%;
-  text-align: center;
-}
-
-main .signIn ul li img {
-  margin: 0 auto;
-  width: 92px;
-  border-radius: 50%;
-}
-
-main .signIn ul li p {
-  font-size: 1rem;
-  line-height: 1.5625rem;
-}
-
-main .time {
-  position: relative;
-}
-
-main .time #timeBox {
-  width: 100%;
-  height: 80vh;
-}
-
-main .time #timeText {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 4.375rem;
-}
-
-main .time button {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #006400;
-  color: #DDD;
-}
-
-main .time button:hover {
-  color: #FFF;
-}
-
-main .prize {
-  overflow: hidden;
-}
-
-main .prize>.pull-left {
-  width: 75%;
-}
-
-main .prize>.pull-left header {
-  text-indent: 1.25rem;
-  font-size: 1.5rem;
-  line-height: 7vh;
-}
-
-main .prize>.pull-left ul {
-  overflow-y: scroll;
-  height: 70vh;
-  text-align: center;
-}
-
-main .prize>.pull-left ul li {
-  display: inline-block;
-  width: 200px;
-}
-
-main .prize>.pull-left ul li img {
-  width: 60%;
-  border-radius: 50%;
-}
-
-main .prize>.pull-left ul li p {
-  font-size: 1rem;
-  line-height: 2.25rem;
-}
-
-main .prize>.pull-right {
-  position: relative;
-  width: 25%;
-  height: 80vh;
-}
-
-main .prize>.pull-right .prizeLevel {
-  position: relative;
-  margin: 30px auto 0;
-  width: 90%;
-}
-
-main .prize>.pull-right .prizeLevel p {
-  position: relative;
-  padding: 20px 10px;
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 3px;
-  background-color: rgba(255,255,255,.1);
-  font-size: .75rem;
-  cursor: pointer;
-}
-
-main .prize>.pull-right .prizeLevel p span {
-  position: absolute;
-  top: 50%;
-  right: 5%;
-  -webkit-transition: .3s;
-  transition: .3s;
-}
-
-main .prize>.pull-right .prizeLevel p .toTop {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-main .prize>.pull-right .prizeLevel ul {
-  position: absolute;
-  top: 56px;
-  left: 0;
-  z-index: 999;
-  width: 100%;
-  background-color: #FFF;
-  color: #444;
-}
-
-main .prize>.pull-right .prizeLevel ul li {
-  padding: 0 10px;
-  line-height: 42px;
-}
-
-main .prize>.pull-right .prizeLevel ul li:hover {
-  background-color: #CCC;
-}
-
-main .prize>.pull-right .prizeNum {
-  overflow: hidden;
-  margin: 20px auto;
-  width: 90%;
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 3px;
-  text-align: center;
-  font-size: 1.875rem;
-  line-height: 3.4375rem;
-}
-
-main .prize>.pull-right .prizeNum a {
-  width: 20%;
-  background: rgba(255,255,255,.3);
-}
-
-main .prize>.pull-right .prizePic {
+  height: 610px;
   box-sizing: border-box;
-  margin: .9375rem;
-  padding: .3125rem;
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 3px;
-  background-color: rgba(255,255,255,.1);
+  background-color: rgba(0,0,0,0.4);
+  .signIn{
+    padding:(30rem/16);
+    header{
+      font-size: (24rem/16);
+      span{
+        display: inline-block;
+        vertical-align: middle;
+        font-size: (16rem/16);
+        background-color: rgba(0,0,0,0.9);
+        line-height: (28rem/16);
+        padding: 0 (25rem/16);
+        margin-left: (10rem/16);
+      }
+    }
+    ul{
+      height:70vh;
+      overflow-y: scroll;
+      li{
+        display: inline-block;
+        margin:2vh;
+        text-align: center;
+        img{
+          width: 92px;
+          margin:0 auto;
+          border-radius: 50%;
+        }
+        p{
+          line-height: (25rem/16);
+          font-size: (16rem/16);
+        }
+      }
+    }
+  }
+  .time{
+    position: relative;
+    #timeBox{
+      width: 100%;
+      height:80vh;
+    }
+    #timeText{
+      position: absolute;
+      font-size: (70rem/16);
+      top:50%;
+      left:50%;
+    }
+    button{
+      color: #DDDDDD;
+      position: absolute;
+      top:30px;
+      left:30px;
+      background-color: rgb(0, 100, 0);
+      padding:10px 20px;
+      border-radius: 5px;
+      &:hover{
+        color: #FFFFFF;
+      }
+    }
+  }
+  .prize{
+    overflow: hidden;
+    &>.pull-left{
+      width: 75%;
+      header{
+        margin:(20rem/16) 0 0 (20rem/16);
+        font-size: (24rem/16);
+      }
+      ul{
+        height:530px;
+        overflow-y: scroll;
+
+        text-align: center;
+        li{
+          width: 200px;
+          display: inline-block;
+          img{
+            width: 60%;
+            border-radius: 50%;
+          }
+          p{
+            line-height: (36rem/16);
+            font-size: (16rem/16);
+          }
+        }
+      }
+    }
+    &>.pull-right{
+      height:610px;
+      width: 25%;
+      position: relative;
+      .prizeLevel{
+        width: 90%;
+        margin:30px auto 0 auto;
+        position: relative;
+        p{
+          position: relative;
+          padding:20px 10px;
+          border-radius: 3px;
+          border: 1px solid rgba(255,255,255,.3);
+          background-color: rgba(255,255,255,.1);
+          cursor: pointer;
+          font-size: (12rem/16);
+          span{
+            -webkit-transition: 0.3s;
+            -moz-transition: 0.3s;
+            -ms-transition: 0.3s;
+            -o-transition: 0.3s;
+            transition: 0.3s;
+            position: absolute;
+            top:50%;
+            right:5%;
+          }
+          .toTop{
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+          }
+        }
+        ul{
+          width: 100%;
+          position: absolute;
+          top:56px;
+          left:0;
+          z-index: 999;
+          color: #444;
+          background-color: #FFFFFF;
+          li{
+            line-height: 42px;
+            padding:0 10px;
+            &:hover{
+              background-color: #CCCCCC;
+            }
+          }
+        }
+      }
+      .prizeNum{
+        overflow: hidden;
+        font-size: (30rem/16);
+        width: 90%;
+        margin:20px auto;
+        text-align: center;
+        line-height: (55rem/16);
+        border: 1px solid rgba(255,255,255,.3);
+        border-radius: 3px;
+        a{
+          width: 20%;
+          background: rgba(255,255,255,.3);
+        }
+      }
+      .prizePic{
+        margin:(15rem/16);
+        background-color: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.3);
+        padding:(5rem/16);
+        border-radius: 3px;
+        box-sizing: border-box;
+        img{
+          display: block;
+          margin:0 auto;
+        }
+      }
+      .prizeBtn{
+        position: absolute;
+        bottom:5%;
+        left:50%;
+        margin-left: -45% ;
+        display: inline-block;
+        width: 90%;
+        text-align: center;
+        background: linear-gradient(#8c62a4, #6f4e8c);
+        cursor: pointer;
+        box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);
+        padding: 15px 10px;
+        border-radius: 5px;
+        font-size: (20rem/16);
+        box-sizing: border-box;
+      }
+      .prizeHistory{
+        position: absolute;
+        bottom:0;
+        right:0;
+      }
+    }
+  }
+  .vote{
+    header{
+      font-size: (24rem/16);
+      span{
+        display: inline-block;
+        vertical-align: middle;
+        font-size: (16rem/16);
+        background-color: rgba(0,0,0,0.9);
+        line-height: (28rem/16);
+        padding: 0 (25rem/16);
+        margin-left: (10rem/16);
+      }
+    }
+    .voteMain{
+      width: 100%;
+      height:70vh;
+    }
+  }
 }
 
-main .prize>.pull-right .prizePic img {
-  display: block;
-  margin: 0 auto;
-}
 
-main .prize>.pull-right .prizeBtn {
+
+footer{
   position: absolute;
-  bottom: 3%;
-  left: 50%;
-  display: inline-block;
-  margin-left: -45%;
-  padding: 15px 10px;
-  width: 90%;
-  border-radius: 5px;
-  background: -webkit-linear-gradient(#8c62a4,#6f4e8c);
-  background: linear-gradient(#8c62a4,#6f4e8c);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.3),0 1px 2px rgba(0,0,0,.15);
-  text-align: center;
-  font-size: 1.25rem;
-  cursor: pointer;
+  bottom:0;
+  left:0;
+  p,ul{
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    position: absolute;
+    left:0;
+    width: 100vw;
+    height:50px;
+    line-height: 50px;
+  }
+  p{
+    bottom:0;
+    font-size: (24rem/16);
+  }
+  ul{
+    bottom:-50px;
+    background-color: rgba(0,0,0,0.6);
+    li{
+      position: relative;
+      width: 53px;
+      height:40px;
+      display: inline-block;
+      vertical-align: middle;
+      margin:0 0.5vw;
+      a{
+        width: 100%;
+        height:40px;
+        display: block;
+        background: url("http://o7qephszd.bkt.clouddn.com/wechatIcon.png")no-repeat 0 0;
+      }
+
+    }
+    .icon1{
+      background-position: -161px -197px;
+    }
+    .icon2{
+      background-position: -109px -197px;
+    }
+    .icon3{
+      background-position: -4px -197px;
+    }
+    .icon4{
+      background-position: -56px -197px;
+    }
+    .icon5{
+      background-position: -266px -197px;
+    }
+    .icon6{
+      background-position: -214px -197px;
+    }
+    .icon7{
+      background-position: -371px -197px;
+    }
+    .icon8{
+      background-position: -424px -197px;
+    }
+    .icon9{
+      background-position: -319px -197px;
+    }
+  }
 }
 
-main .vote header {
-  font-size: 1.5rem;
-}
+//footer hover
+.hover{
+   p{
+     bottom: -(80rem/16);
+   }
+   ul{
+     bottom:0;
+   }
+ }
 
-main .vote header span {
-  display: inline-block;
-  margin-left: .625rem;
-  padding: 0 1.5625rem;
-  background-color: rgba(0,0,0,.9);
-  vertical-align: middle;
-  font-size: 1rem;
-  line-height: 1.75rem;
-}
 
-main .vote .voteMain {
-  width: 100%;
-  height: 70vh;
-}
-
-footer {
+#setBgBox{
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
   position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-footer p,footer ul {
-  position: absolute;
-  left: 0;
-  width: 100vw;
-  height: 3rem;
-  line-height: 3rem;
-  -webkit-transition: .5s;
-  transition: .5s;
-}
-
-footer p {
-  bottom: 0;
-  font-size: 1.875rem;
-}
-
-.hover p,footer ul {
-  bottom: -5rem;
-}
-
-footer ul {
-  background-color: rgba(0,0,0,.6);
-}
-
-footer ul li {
-  position: relative;
-  display: inline-block;
-  margin: 0 .5vw;
-  width: 53px;
-  height: 40px;
-  vertical-align: middle;
-}
-
-footer ul li a {
-  display: block;
-  width: 100%;
-  height: 40px;
-  background: url(http://o7qephszd.bkt.clouddn.com/wechatIcon.png) no-repeat;
-}
-
-footer ul .icon1 {
-  background-position: -161px -197px;
-}
-
-footer ul .icon2 {
-  background-position: -109px -197px;
-}
-
-footer ul .icon3 {
-  background-position: -4px -197px;
-}
-
-footer ul .icon4 {
-  background-position: -56px -197px;
-}
-
-footer ul .icon5 {
-  background-position: -266px -197px;
-}
-
-footer ul .icon6 {
-  background-position: -214px -197px;
-}
-
-footer ul .icon7 {
-  background-position: -371px -197px;
-}
-
-footer ul .icon8 {
-  background-position: -424px -197px;
-}
-
-footer ul .icon9 {
-  background-position: -319px -197px;
-}
-
-.hover ul {
-  bottom: 0;
-}
-
-#setBgBox {
-  position: absolute;
-  top: 120px;
-  left: 50%;
-  overflow: hidden;
-  margin-left: -425px;
+  left:50%;
+  top:120px;
+  margin-left: -(850px/2);
   width: 850px;
-  background-color: #FFF;
-  -webkit-transition: .5s;
-  transition: .5s;
-}
-
-#setBgBox h3 {
-  color: #747474;
-  font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 3.125rem;
-}
-
-#setBgBox h3 #setCloseBtn {
-  position: absolute;
-  right: .625rem;
-  display: inline-block;
-  color: #CCC;
-  font-size: 2.1875rem;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-
-#setBgBox ul {
-  overflow: scroll;
-  height: 500px;
-  color: #191919;
-}
-
-#setBgBox ul li {
-  display: inline-block;
-  margin: 1%;
-  width: 30%;
-  vertical-align: top;
-}
-
-#setBgBox ul li img {
-  width: 100%;
-  height: 167px;
-  border: 4px solid #e6e6e6;
-  cursor: pointer;
-}
-
-#setBgBox ul li p {
-  text-align: left;
-  font-size: .875rem;
-  line-height: 1.5rem;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  h3{
+    color: #747474;
+    line-height: (50rem/16);
+    font-size: (20rem/16);
+    font-weight: 500;
+    #setCloseBtn{
+      color: #CCCCCC;
+      font-size: (35rem/16);
+      position: absolute;
+      right:(10rem/16);
+      display: inline-block;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+  ul{
+    height:500px;
+    overflow: scroll;
+    color: #191919;
+    li{
+      display: inline-block;
+      vertical-align: top;
+      width: 30%;
+      margin:1%;
+      img{
+        cursor: pointer;
+        width: 100%;
+        height:167px;
+        border:4px solid #e6e6e6;
+      }
+      p{
+        line-height: (30rem/20);
+        font-size: (14rem/16);
+        text-align: left;
+      }
+    }
+  }
 }

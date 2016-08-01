@@ -1,7 +1,6 @@
 <?php
-
-require __DIR__.'/../ajaxSetting.php';
-require __DIR__.'/../../sql.php';
+require dirname(__FILE__).'/../../common/cross.php';
+require dirname(__FILE__).'/../../lib/Sql.php';
 
 /**
  * 获取加入活动的用户头像url和nickname

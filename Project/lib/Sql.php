@@ -1,29 +1,31 @@
 <?php
-class sql{
-    private $servername;
-    private $username;
-    private $password;
+require dirname(__FILE__).'/../config/sqlConfig.php';
+class Sql{
+    private $serverName = SERVER_NAME;
+    private $username = USERNAME;
+    private $password = PASSWORD;
+    private $dbName = DATABASE_NAME;
     private $conn;
 
-    function __construct($sName,$uName,$pw,$dbName){
-        $this->servername = $sName;
-        $this->username = $uName;
-        $this->password = $pw;
-        $this->dataBaseName = $dbName;
+    function __construct(){
+        $this->linkSql();
+    }
 
-//        链接数据库
+    function __destruct(){
+        $this->closeSql();
+    }
+
+    /**
+     * 链接数据库
+     */
+    public function linkSql(){
         try{
-            $conn = new PDO("mysql:host=".$this->servername.";dbname=".$this->dataBaseName,$this->username,$this->password);
+            $conn = new PDO("mysql:host=".$this->serverName.";dbname=".$this->dbName,$this->username,$this->password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn = $conn;
         }catch (PDOException $e){
             echo $e->getMessage();
         }
-    }
-
-    function __destruct(){
-//        关闭连接
-        $this->conn = null;
     }
 
     /**
@@ -35,7 +37,7 @@ class sql{
         try{
             $this->conn->exec($sqlCommand);
         }catch (PDOException $e){
-            file_put_contents('z.txt',$e->getMessage());
+            echo $e->getMessage();
         }
     }
 
@@ -49,5 +51,12 @@ class sql{
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         return $stmt->fetchAll();
+    }
+
+    /**
+     * 关闭连接
+     */
+    private function closeSql(){
+        $this->conn = null;
     }
 }

@@ -1,40 +1,37 @@
-body {
+body{
   max-width: 640px;
 }
-
-header {
-  border-bottom: 1px dashed #CCC;
+header{
+  border-bottom: 1px dashed #CCCCCC;
+  img{
+    width: 100%;
+  }
+  h1{
+    color: #555;
+    font-size: (28rem/16);
+  }
+  small{
+    font-size: (14rem/16);
+    color: #777;
+  }
 }
-
-header img {
-  width: 100%;
-}
-
-header h1 {
-  color: #555;
-  font-size: 1.75rem;
-}
-
-header small {
-  color: #777;
-  font-size: .875rem;
-}
-
-main p {
-  color: #444;
-  font-size: 1.125rem;
-}
-
-main .form label {
-  margin: 0 1rem;
-  color: #333;
-  font-size: 1rem;
-  line-height: 2rem;
-}
-
-main .form input[type=button] {
-  padding: 0 1.25rem;
-  background-color: #CCC;
-  color: #000;
-  line-height: 2.125rem;
+main{
+  p{
+    font-size: (18rem/16);
+    color: #444;
+  }
+  .form{
+    label{
+      font-size: (16rem/16);
+      line-height: (32rem/16);
+      margin:0 (16rem/16);
+      color: #333;
+    }
+    input[type=button]{
+      color: #000;
+      line-height: (34rem/16);
+      padding: 0 (20rem/16);
+      background-color: #CCCCCC;
+    }
+  }
 }

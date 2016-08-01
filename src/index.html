@@ -3,35 +3,34 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>wechat</title>
-    <link rel="stylesheet" href="../Public/Css/normal.min.css">
-    <link href="//cdn.bootcss.com/weui/0.4.3/style/weui.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../Public/Css/index.min.css">
+    <link rel="stylesheet" href="../public/css/normal.min.css">
+    <link rel="stylesheet" href="../public/css/index.min.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// --><!--[if lt IE 9]>
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body style='background: url("http://o7qephszd.bkt.clouddn.com/wechatBg1.jpg")no-repeat center'>
+<body style='background: url("http://o7qephszd.bkt.clouddn.com/wechatBg1.jpg")no-repeat center;'>
 <header class="clearfix container">
     <h1 class="pull-left">Wechat</h1>
-    <a class="pull-right" href="#">
-        <img src="http://o7qephszd.bkt.clouddn.com/wechatLogo.png" alt="logo">
-    </a>
+    <a class="pull-right" href="#"><img src="http://o7qephszd.bkt.clouddn.com/wechatLogo.png" alt="logo"></a>
 </header>
 <main class="center-block">
-    <div class="signIn hide">
+    <div class="signIn" style="display: none">
         <header>签到墙<span>共<i></i>人签到</span></header>
         <ul></ul>
     </div>
-    <div class="time hide">
+    <div class="time" style="display: none;">
         <div id="timeBox"></div>
         <p id="timeText"></p>
         <button type="button" href="javascript:;">start</button>
     </div>
-    <div class="prize">
+    <div class="prize" style="display: none">
         <div class="pull-left">
             <header>抽个奖</header>
             <ul></ul>
@@ -52,11 +51,9 @@
             <a class="prizeBtn" href="#">start</a>
         </div>
     </div>
-    <div class="vote hide">
+    <div class="vote" style="display: none">
         <header>选出好语言<span>共<i>12</i>人投票</span></header>
-        <div class="voteMain">
-
-        </div>
+        <div class="voteMain"></div>
     </div>
 </main>
 <footer>
@@ -77,59 +74,24 @@
 <div id="setBgBox" class="hide" style="opacity: 0">
     <h3 class="text-center">微信大屏幕风格选择<a id="setCloseBtn" href="javascript:;">+</a></h3>
     <ul class="text-center">
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg1.jpg" alt="background" data-flag="bg1Url">
-            <p>bg1</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg2.jpg" alt="background" data-flag="bg2Url">
-            <p>bg2</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg3.jpg" alt="background" data-flag="bg3Url">
-            <p>bg3</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg4.jpg" alt="background" data-flag="bg4Url">
-            <p>bg4</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg5.jpg" alt="background" data-flag="bg5Url">
-            <p>bg5</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg6.jpg" alt="background" data-flag="bg6Url">
-            <p>bg6</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg7.jpg" alt="background" data-flag="bg7Url">
-            <p>bg7</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg8.jpg" alt="background" data-flag="bg8Url">
-            <p>bg8</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg9.jpg" alt="background" data-flag="bg9Url">
-            <p>bg9</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg10.jpg" alt="background" data-flag="bg10Url">
-            <p>bg10</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg11.jpg" alt="background" data-flag="bg11Url">
-            <p>bg10</p>
-        </li>
-        <li>
-            <img src="http://o7qephszd.bkt.clouddn.com/wechatBg12.jpg" alt="background" data-flag="bg12Url">
-            <p>bg10</p>
-        </li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg1.jpg" alt="background" data-flag="bg1Url"><p>bg1</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg2.jpg" alt="background" data-flag="bg2Url"><p>bg2</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg3.jpg" alt="background" data-flag="bg3Url"><p>bg3</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg4.jpg" alt="background" data-flag="bg4Url"><p>bg4</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg5.jpg" alt="background" data-flag="bg5Url"><p>bg5</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg6.jpg" alt="background" data-flag="bg6Url"><p>bg6</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg7.jpg" alt="background" data-flag="bg7Url"><p>bg7</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg8.jpg" alt="background" data-flag="bg8Url"><p>bg8</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg9.jpg" alt="background" data-flag="bg9Url"><p>bg9</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg10.jpg" alt="background" data-flag="bg10Url"><p>bg10</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg11.jpg" alt="background" data-flag="bg11Url"><p>bg10</p></li>
+        <li><img src="http://o7qephszd.bkt.clouddn.com/wechatBg12.jpg" alt="background" data-flag="bg12Url"><p>bg10</p></li>
     </ul>
 </div>
+
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.common.min.js"></script>
 <script src="//cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
-<script src="../Public/Js/index.min.js"></script>
+<script src="../public/js/index.min.js"></script>
 </body>
 </html>

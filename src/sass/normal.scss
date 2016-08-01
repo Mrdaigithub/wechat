@@ -1,27 +1,21 @@
-a,body {
-  color: #fff;
-}
-
-.caret,img {
-  vertical-align: middle;
-}
+@charset "utf-8";
+/* CSS Document */
 
 body {
-  margin: 0 auto;
+  font-family: Helvetica, "Microsoft YaHei";
   font-size: 12px;
-  font-family: Helvetica,"Microsoft YaHei";
+  color: #fff;
+  margin: 0 auto;
 }
 
-a,button,div,form,h1,h2,h3,h4,h5,h6,img,input,li,ol,p,ul {
-  margin: 0;
+div, ul, ol, li, h1, h2, h3, h4, h5, h6, form, input, p, button, a, img {
   padding: 0;
+  margin: 0;
 }
-
-i {
+i{
   font-style: normal;
 }
-
-li,ul {
+ul, li {
   list-style: none;
 }
 
@@ -29,91 +23,108 @@ li,ul {
   border: none;
 }
 
-b,strong {
+b, strong {
   font-weight: 700;
 }
 
 img {
   max-width: 100%;
+  vertical-align: middle;
   border: 0;
   -ms-interpolation-mode: bicubic;
   -webkit-touch-callout: none;
 }
 
 a {
+  color: #fff;
   text-decoration: none;
 }
 
+//流式布局，宽度100%
 .container-fluid {
-  margin-right: auto;
-  margin-left: auto;
   width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .container {
-  margin: 0 auto;
   width: 90%;
+  margin: 0 auto;
 }
 
+//文本左对齐
 .text-left {
   text-align: left;
 }
 
+//文本友对齐
 .text-right {
   text-align: right;
 }
 
+//文本居中对其
 .text-center {
   text-align: center;
 }
 
+//文本小写
 .text-lowercase {
   text-transform: lowercase;
 }
 
+//文本大写
 .text-uppercase {
   text-transform: uppercase;
 }
 
+//块居中
 .center-block {
   display: block;
   margin-right: auto;
   margin-left: auto;
 }
 
+//右浮动
 .pull-right {
-  float: right!important;
+  float: right !important;
 }
 
+//左浮动
 .pull-left {
-  float: left!important;
+  float: left !important;
 }
 
+//父元素修复浮动的高度塌缩
 .clearfix {
   overflow: hidden;
 }
 
+//图片自适应
 .img-responsive {
   display: block;
-  height: auto;
   max-width: 100%;
+  height: auto;
 }
 
+//三角形
 .caret {
   display: inline-block;
-  margin-left: 2px;
   width: 0;
   height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
   border-top: 4px dashed;
   border-top: 4px solid;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
 }
 
+//显示dom
 .show {
   display: block;
 }
 
+//隐藏dom
 .hide {
   display: none;
 }
