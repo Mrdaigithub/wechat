@@ -14,13 +14,14 @@ header{
 
 main{
   width: 80vw;
-  height: 610px;
+  height: 75vh;
   box-sizing: border-box;
   background-color: rgba(0,0,0,0.4);
-  .signIn{
-    padding:(30rem/16);
+  div{
     header{
-      font-size: (24rem/16);
+      line-height: 8vh;
+      text-indent: (25rem/16);
+      font-size: (20rem/16);
       span{
         display: inline-block;
         vertical-align: middle;
@@ -31,8 +32,10 @@ main{
         margin-left: (10rem/16);
       }
     }
+  }
+  .signIn{
     ul{
-      height:70vh;
+      height:67vh;
       overflow-y: scroll;
       li{
         display: inline-block;
@@ -54,19 +57,19 @@ main{
     position: relative;
     #timeBox{
       width: 100%;
-      height:80vh;
+      height:67vh;
     }
     #timeText{
       position: absolute;
-      font-size: (70rem/16);
-      top:50%;
+      font-size: (60rem/16);
+      top:55%;
       left:50%;
     }
     button{
       color: #DDDDDD;
       position: absolute;
-      top:30px;
-      left:30px;
+      bottom:5vh;
+      left:5vh;
       background-color: rgb(0, 100, 0);
       padding:10px 20px;
       border-radius: 5px;
@@ -79,17 +82,13 @@ main{
     overflow: hidden;
     &>.pull-left{
       width: 75%;
-      header{
-        margin:(20rem/16) 0 0 (20rem/16);
-        font-size: (24rem/16);
-      }
       ul{
-        height:530px;
+        height:67vh;
         overflow-y: scroll;
 
         text-align: center;
         li{
-          width: 200px;
+          width: 150px;
           display: inline-block;
           img{
             width: 60%;
@@ -103,16 +102,16 @@ main{
       }
     }
     &>.pull-right{
-      height:610px;
+      height:75vh;
       width: 25%;
       position: relative;
       .prizeLevel{
         width: 90%;
-        margin:30px auto 0 auto;
+        margin:3vh auto 0 auto;
         position: relative;
         p{
           position: relative;
-          padding:20px 10px;
+          padding:2vh;
           border-radius: 3px;
           border: 1px solid rgba(255,255,255,.3);
           background-color: rgba(255,255,255,.1);
@@ -139,7 +138,7 @@ main{
         ul{
           width: 100%;
           position: absolute;
-          top:56px;
+          top:7vh;
           left:0;
           z-index: 999;
           color: #444;
@@ -157,9 +156,9 @@ main{
         overflow: hidden;
         font-size: (30rem/16);
         width: 90%;
-        margin:20px auto;
+        margin:2vh auto;
         text-align: center;
-        line-height: (55rem/16);
+        line-height: 8vh;
         border: 1px solid rgba(255,255,255,.3);
         border-radius: 3px;
         a{
@@ -168,7 +167,8 @@ main{
         }
       }
       .prizePic{
-        margin:(15rem/16);
+        width: 90%;
+        margin:3vh auto;
         background-color: rgba(255,255,255,.1);
         border: 1px solid rgba(255,255,255,.3);
         padding:(5rem/16);
@@ -190,8 +190,8 @@ main{
         background: linear-gradient(#8c62a4, #6f4e8c);
         cursor: pointer;
         box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);
-        padding: 15px 10px;
         border-radius: 5px;
+        line-height: 7vh;
         font-size: (20rem/16);
         box-sizing: border-box;
       }
