@@ -17,7 +17,12 @@
         return arr;
     };
 
-    // 随机获取数组的某个元素
+    /**
+     * 随机获取数组的某个元素
+     * @param arr
+     * @param num
+     * @returns {*}
+     */
     let getRandomArrEle = (arr,num)=>{
         if (num > arr.length || num <= 0) return false;
         let result = [];
@@ -84,6 +89,31 @@
             poll('http://120.26.53.25/wechat/Project/api/getActiveUser/');
         },false);
     };
+
+    /**
+     * 消息上墙
+     */
+    let messageView = ()=>{
+        let updateMsg = ()=>{
+            $.getJSON('http://120.26.53.25/wechat/Project/api/getMessage/',(data)=>{
+                let htmlStr = '';
+                data.forEach((e)=>{
+                    htmlStr += '<li><img src="'+ e.headimgurl +'" alt=""><div><p>'+ e.nickname +'</p><strong>'+ e.content +'</strong></div></li>'
+                })
+                DOC.querySelector('.message .pull-right').innerHTML = htmlStr;
+            })
+            setTimeout(updateMsg,5000);
+        }
+        updateMsg();
+
+
+        // 开启消息模块
+        DOC.querySelector('#msgBtn').addEventListener('click',()=>{
+            hideOtherModule();
+            if(DOC.querySelector('main').style.display === 'none') DOC.querySelector('main').style.display = 'block';
+            DOC.querySelector('.message').style.display = 'block';
+        },false)
+    }
 
     /**
      * 倒计时按钮
@@ -176,7 +206,9 @@
      * 抽奖
      */
     let prize = ()=>{
-        let animationSwitch = false;
+        // 动画开关
+        let animationSwitch = false,
+            prizeUserInfo = null;
 
 
         // 抽奖内部函数
@@ -243,19 +275,27 @@
             DOC.querySelector('.prize .pull-left ul').innerHTML = htmlStr;
         };
 
-        let prizeAnimation = (toPrizeUser,singleToPrizeUserArr,intervalTime,flag)=>{
+        /**
+         * 抽奖动画
+         * @param toPrizeUser
+         * @param singleToPrizeUserArr
+         * @param intervalTime
+         * @param flag
+         */
+        let prizeAnimation = (toPrizeUser,singleToPrizeUserArr,intervalTime,flag=0)=>{
             let li = Array.prototype.slice.call(DOC.querySelectorAll('.prize .pull-left ul li'));
-            console.log(singleToPrizeUserArr);
-            for (let j=0; j<singleToPrizeUserArr.length; j++){
-                li.forEach((e)=>{
-                    e.querySelector('img').src = toPrizeUser[singleToPrizeUserArr[j]].headimgurl;
-                    e.querySelector('p').innerHTML = toPrizeUser[singleToPrizeUserArr[j]].nickname;
-                })
-            }
+            if (flag>=singleToPrizeUserArr.length) flag = 0;
+            li.forEach((e)=>{
+                if (!toPrizeUser[singleToPrizeUserArr[flag]].headimgurl) toPrizeUser[singleToPrizeUserArr[flag]].headimgurl = 'http://o7qephszd.bkt.clouddn.com/wechatDefaultHeadImg.png';
+                e.querySelector('img').src = toPrizeUser[singleToPrizeUserArr[flag]].headimgurl;
+                e.querySelector('p').innerHTML = toPrizeUser[singleToPrizeUserArr[flag]].nickname;
+            })
             setTimeout(()=>{
-                prizeAnimation(singleToPrizeUserArr,intervalTime,flag);
+                if (!animationSwitch) return;
+                prizeAnimation(toPrizeUser,singleToPrizeUserArr,intervalTime,++flag);
             },intervalTime);
         };
+
         /**
          * 抽奖烟雾弹
          * @param prizeData
@@ -272,10 +312,62 @@
             }
             singleToPrizeUserArr = randomArr(singleToPrizeUserArr);
 
-            prizeAnimation(toPrizeUser,singleToPrizeUserArr,1000,0);
+            prizeAnimation(toPrizeUser,singleToPrizeUserArr,100);
         };
 
+        /**
+         * 构建中奖的用户组
+         * @param toPrizeUser
+         * @returns {Array}
+         */
+        let createWinningUsers = (toPrizeUser)=>{
+            let arr = [],
+                winningUsersSub = [],
+                winningUsers = [];
+            for (let i=0; i<toPrizeUser.length; i++){
+                arr.push(i);
+            }
+            winningUsersSub = getRandomArrEle(arr,DOC.querySelectorAll('.prize .pull-left ul li').length);
+            winningUsersSub.forEach((e)=>{
+                winningUsers.push(toPrizeUser[e]);
+            })
+            return winningUsers;
+        }
 
+        /**
+         * 填充中奖的用户到左侧小窗口
+         * @param winningUsers
+         */
+        let paddingWinningUsers = (winningUsers)=>{
+            let li = Array.prototype.slice.call(DOC.querySelectorAll('.prize .pull-left ul li'));
+            for (let i=0; i<li.length; i++){
+                li[i].querySelector('img').src = winningUsers[i].headimgurl;
+                li[i].querySelector('p').innerHTML = winningUsers[i].nickname;
+            }
+        }
+
+        /**
+         * 将中奖用户数据保存到数据库
+         * @param prizeData
+         * @param prizewinningUsers
+         */
+        let saveWinningUsersToServer = (prizeData,prizewinningUsers)=>{
+            let resultData = [],
+                prizeId = null;
+            // 获取当前的奖品等级
+            prizeData.forEach((e)=>{
+                if (DOC.querySelector('.prizeLevel p i').innerHTML === e.level) prizeId = e.id;
+            })
+            // 构建要传输的数据包
+            prizewinningUsers.forEach((e)=>{
+                let arr = {};
+                arr.openid = e.openid;
+                arr.prizeId = prizeId;
+                resultData.push(arr);
+            })
+            resultData = JSON.stringify(resultData);
+            $.post('http://120.26.53.25/wechat/Project/api/receivePrizeUser/',resultData);
+        }
 
         // 开启抽奖模块视图
         DOC.querySelector('#giftBtn').addEventListener('click',()=>{
@@ -286,6 +378,7 @@
 
         // 获取到数据库的奖品数据
         $.getJSON('http://120.26.53.25/wechat/Project/api/getPrizeData/',(prizeData)=>{
+            // 获取数据库可以参加抽奖的用户数据
             $.getJSON('http://120.26.53.25/wechat/Project/api/getToPrizeUser/',(toPrizeUser)=>{
                 // 填充奖品等级选项卡
                 paddingPrizeLevel(prizeData);
@@ -331,9 +424,24 @@
                     }
                 },false);
 
-                // 开始抽奖
-                DOC.querySelector('.prizeBtn').addEventListener('click',()=>{
-                    prizeBomb(prizeData,toPrizeUser);
+                // 开始或停止抽奖
+                DOC.querySelector('.prizeBtn').addEventListener('click',(event)=>{
+                    let e = WIN.event || event;
+                    $.getJSON('http://120.26.53.25/wechat/Project/api/getToPrizeUser/',(toPrizeUser)=>{
+                        if (e.target.innerHTML === 'start'){
+                            // 开始抽奖
+                            animationSwitch = true;
+                            prizeBomb(prizeData,toPrizeUser);
+                            e.target.innerHTML = 'stop'
+                        }else {
+                            // 停止抽奖
+                            animationSwitch = false;
+                            e.target.innerHTML = 'start';
+                            let winningUsers = createWinningUsers(toPrizeUser);
+                            paddingWinningUsers(winningUsers);
+                            saveWinningUsersToServer(prizeData,winningUsers);
+                        }
+                    })
                 },false)
             })
         });
@@ -473,6 +581,7 @@
 
     index();
     signInView();
+    messageView();
     countdown();
     prize();
     vote();
