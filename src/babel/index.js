@@ -1,6 +1,5 @@
 ((DOC,WIN)=>{
     const BODY = DOC.body;
-    const MAIN = DOC.querySelector('main');
     const FOOTER = DOC.querySelector('footer');
 
     // 工具函数
@@ -60,26 +59,33 @@
      * 填充签到页面的内容
      */
     let signInView = ()=>{
-        let jsonStr = '',
-            sumNumView = DOC.querySelector('.signIn header i'),
-            signView = DOC.querySelector('.signIn ul');
-        let poll = (url)=>{
-            $.getJSON(url,(json)=>{
-                if (jsonStr !== JSON.stringify(json)){
-                    let signHtml = '';
-                    jsonStr = JSON.stringify(json);
+        let sumNumView = DOC.querySelector('.signIn header i'),
+            signView = DOC.querySelector('.signIn ul'),
+            postData = 0;
 
-                    sumNumView.innerHTML = json.length;
-                    json.forEach((e)=>{
-                        if (!e.headimgurl) e.headimgurl = "http://o7qephszd.bkt.clouddn.com/wechatDefaultHeadImg.png";
-                        signHtml += '<li><img src='+e.headimgurl+' alt="headImg"><p>'+e.nickname+'</p></li>';
+        let poll = (url)=>{
+            $.ajax({
+                type: 'POST',
+                url: url,
+                cache: false,
+                data: JSON.stringify(postData),
+                success: (data)=> {
+                    data = JSON.parse(data);
+                    postData = data.length;
+
+                    let signHtml = '';
+                    sumNumView.innerHTML = data.length;
+                    data.forEach((e)=> {
+                        if (!e.headImgUrl) e.headImgUrl = "http://o7qephszd.bkt.clouddn.com/wechatDefaultHeadImg.png";
+                        signHtml += '<li><img src=' + e.headImgUrl + ' alt="headImg"><p>' + e.nickname + '</p></li>';
                     });
                     signView.innerHTML = signHtml;
+                    poll(url);
+                },
+                error: ()=> {
+                    poll(url);
                 }
-            });
-            setTimeout(()=>{
-                poll(url);
-            },5000)
+            })
         };
 
         DOC.querySelector('#SignBtn').addEventListener('click',()=>{
@@ -94,17 +100,28 @@
      * 消息上墙
      */
     let messageView = ()=>{
-        let updateMsg = ()=>{
-            $.getJSON('http://120.26.53.25/wechat/Project/api/getMessage/',(data)=>{
-                let htmlStr = '';
-                data.forEach((e)=>{
-                    htmlStr += '<li><img src="'+ e.headimgurl +'" alt=""><div><p>'+ e.nickname +'</p><strong>'+ e.content +'</strong></div></li>'
-                })
-                DOC.querySelector('.message .pull-right').innerHTML = htmlStr;
-            })
-            setTimeout(updateMsg,5000);
-        }
-        updateMsg();
+        let postData = 0;
+        let updateMsg = (url)=>{
+            $.ajax({
+                type: 'POST',
+                url: url,
+                cache: false,
+                data: JSON.stringify(postData),
+                success: (data)=>{
+                    data = JSON.parse(data);
+                    postData = data.length;
+                    let htmlStr = '';
+                    data.forEach((e)=>{
+                        htmlStr += '<li><img src="'+ e.headImgUrl+'" alt=""><div><p>'+ e.nickname +'</p><strong>'+ e.content +'</strong></div></li>';
+                    });
+                    DOC.querySelector('.message .pull-right').innerHTML = htmlStr;
+                    updateMsg(url);
+                },
+                error: ()=>{
+                    updateMsg(url);
+                }
+            });
+        };
 
 
         // 开启消息模块
@@ -112,8 +129,9 @@
             hideOtherModule();
             if(DOC.querySelector('main').style.display === 'none') DOC.querySelector('main').style.display = 'block';
             DOC.querySelector('.message').style.display = 'block';
+            updateMsg('http://120.26.53.25/wechat/Project/api/getMessage/');
         },false)
-    }
+    };
 
     /**
      * 倒计时按钮
@@ -207,8 +225,7 @@
      */
     let prize = ()=>{
         // 动画开关
-        let animationSwitch = false,
-            prizeUserInfo = null;
+        let animationSwitch = false;
 
 
         // 抽奖内部函数
@@ -286,10 +303,9 @@
             let li = Array.prototype.slice.call(DOC.querySelectorAll('.prize .pull-left ul li'));
             if (flag>=singleToPrizeUserArr.length) flag = 0;
             li.forEach((e)=>{
-                if (!toPrizeUser[singleToPrizeUserArr[flag]].headimgurl) toPrizeUser[singleToPrizeUserArr[flag]].headimgurl = 'http://o7qephszd.bkt.clouddn.com/wechatDefaultHeadImg.png';
-                e.querySelector('img').src = toPrizeUser[singleToPrizeUserArr[flag]].headimgurl;
+                e.querySelector('img').src = toPrizeUser[singleToPrizeUserArr[flag]].headImgUrl;
                 e.querySelector('p').innerHTML = toPrizeUser[singleToPrizeUserArr[flag]].nickname;
-            })
+            });
             setTimeout(()=>{
                 if (!animationSwitch) return;
                 prizeAnimation(toPrizeUser,singleToPrizeUserArr,intervalTime,++flag);
@@ -330,9 +346,9 @@
             winningUsersSub = getRandomArrEle(arr,DOC.querySelectorAll('.prize .pull-left ul li').length);
             winningUsersSub.forEach((e)=>{
                 winningUsers.push(toPrizeUser[e]);
-            })
+            });
             return winningUsers;
-        }
+        };
 
         /**
          * 填充中奖的用户到左侧小窗口
@@ -341,10 +357,10 @@
         let paddingWinningUsers = (winningUsers)=>{
             let li = Array.prototype.slice.call(DOC.querySelectorAll('.prize .pull-left ul li'));
             for (let i=0; i<li.length; i++){
-                li[i].querySelector('img').src = winningUsers[i].headimgurl;
+                li[i].querySelector('img').src = winningUsers[i].headImgUrl;
                 li[i].querySelector('p').innerHTML = winningUsers[i].nickname;
             }
-        }
+        };
 
         /**
          * 将中奖用户数据保存到数据库
@@ -357,94 +373,109 @@
             // 获取当前的奖品等级
             prizeData.forEach((e)=>{
                 if (DOC.querySelector('.prizeLevel p i').innerHTML === e.level) prizeId = e.id;
-            })
+            });
             // 构建要传输的数据包
             prizewinningUsers.forEach((e)=>{
                 let arr = {};
                 arr.openid = e.openid;
                 arr.prizeId = prizeId;
                 resultData.push(arr);
-            })
+            });
             resultData = JSON.stringify(resultData);
             $.post('http://120.26.53.25/wechat/Project/api/receivePrizeUser/',resultData);
-        }
+        };
 
-        // 开启抽奖模块视图
-        DOC.querySelector('#giftBtn').addEventListener('click',()=>{
-            hideOtherModule();
-            if(DOC.querySelector('main').style.display === 'none') DOC.querySelector('main').style.display = 'block';
-            DOC.querySelector('.prize').style.display = 'block';
-        },false);
+        // 初始化
+        let init = ()=>{
 
-        // 获取到数据库的奖品数据
-        $.getJSON('http://120.26.53.25/wechat/Project/api/getPrizeData/',(prizeData)=>{
-            // 获取数据库可以参加抽奖的用户数据
-            $.getJSON('http://120.26.53.25/wechat/Project/api/getToPrizeUser/',(toPrizeUser)=>{
-                // 填充奖品等级选项卡
-                paddingPrizeLevel(prizeData);
+            // 获取到数据库的奖品数据
+            $.getJSON('http://120.26.53.25/wechat/Project/api/getPrizeData/',(prizeData)=>{
 
-                // 填充下方的奖品图片
-                paddingPrizeImg(prizeData);
+                // 获取数据库可以参加抽奖的用户数据
+                $.getJSON('http://120.26.53.25/wechat/Project/api/getToPrizeUser/',(toPrizeUsers)=>{
 
-                // 显示隐藏奖品选项卡
-                DOC.querySelector('.prizeLevel').addEventListener('click',togglePrizeLevel,false);
+                    // 填充奖品等级选项卡
+                    paddingPrizeLevel(prizeData);
 
-                // 切换奖品选项
-                DOC.querySelector('.prizeLevel ul').addEventListener('click',(event)=>{
-                    let e = WIN.event || event;
-                    if (e.target.nodeName === 'LI'){
-                        DOC.querySelector('.prizeLevel p i').innerHTML = e.target.innerHTML;
-                        paddingPrizeImg(prizeData);
-                        updateToPrizeUserNumView(prizeData,toPrizeUser);
-                    }
-                },false);
+                    // 填充下方的奖品图片
+                    paddingPrizeImg(prizeData);
 
-                // 减少左侧选定用户的数量
-                DOC.querySelector('.lessBtn').addEventListener('click',()=>{
-                    var num = parseInt(DOC.querySelector('.prizeNum span').innerHTML);
-                    if (num > 0){
-                        DOC.querySelector('.prizeNum span').innerHTML = --num;
-                        updateToPrizeUserNumView(prizeData,toPrizeUser);
-                    }
-                },false);
+                    // 显示隐藏奖品选项卡
+                    DOC.querySelector('.prizeLevel').addEventListener('click',togglePrizeLevel,false);
 
-                // 减少左侧选定用户的数量
-                DOC.querySelector('.addBtn').addEventListener('click',()=>{
-                    let userNum = toPrizeUser.length,
-                        prizeNum = 0;
-                    prizeData.forEach((e)=>{
-                        if (e.level === DOC.querySelector('.prizeLevel i').innerHTML){
-                            prizeNum = e.num;
+                    // 切换奖品选项
+                    DOC.querySelector('.prizeLevel ul').addEventListener('click',(event)=>{
+                        let e = WIN.event || event;
+                        if (e.target.nodeName === 'LI'){
+                            DOC.querySelector('.prizeLevel p i').innerHTML = e.target.innerHTML;
+                            paddingPrizeImg(prizeData);
+                            updateToPrizeUserNumView(prizeData,toPrizeUsers);
                         }
-                    });
-                    let num = parseInt(DOC.querySelector('.prizeNum span').innerHTML);
-                    if (num < Math.min(userNum,prizeNum)){
-                        DOC.querySelector('.prizeNum span').innerHTML = ++num;
-                        updateToPrizeUserNumView(prizeData,toPrizeUser);
-                    }
-                },false);
+                    },false);
 
-                // 开始或停止抽奖
-                DOC.querySelector('.prizeBtn').addEventListener('click',(event)=>{
-                    let e = WIN.event || event;
-                    $.getJSON('http://120.26.53.25/wechat/Project/api/getToPrizeUser/',(toPrizeUser)=>{
+                    // 减少左侧选定用户的数量
+                    DOC.querySelector('.lessBtn').addEventListener('click',()=>{
+                        var num = parseInt(DOC.querySelector('.prizeNum span').innerHTML);
+                        if (num > 0){
+                            DOC.querySelector('.prizeNum span').innerHTML = --num;
+                            updateToPrizeUserNumView(prizeData,toPrizeUsers);
+                        }
+                    },false);
+
+                    // 添加左侧选定用户的数量
+                    DOC.querySelector('.addBtn').addEventListener('click',()=>{
+                        let userNum = toPrizeUsers.length,
+                            prizeNum = 0;
+                        if (userNum <= 0){
+                            
+                        }
+                        prizeData.forEach((e)=>{
+                            if (e.level === DOC.querySelector('.prizeLevel i').innerHTML){
+                                prizeNum = e.num;
+                            }
+                        });
+                        let num = parseInt(DOC.querySelector('.prizeNum span').innerHTML);
+                        if (num < Math.min(userNum,prizeNum)){
+                            DOC.querySelector('.prizeNum span').innerHTML = ++num;
+                            updateToPrizeUserNumView(prizeData,toPrizeUsers);
+                        }
+                    },false);
+
+                    // 开始或停止抽奖
+                    DOC.querySelector('.prizeBtn').addEventListener('click',(event)=>{
+                        let e = WIN.event || event;
                         if (e.target.innerHTML === 'start'){
+                            if (toPrizeUsers.length <= 0){
+                                DOC.querySelector('.weui_dialog_alert').style.display = 'block';
+                                return 0;
+                            }
                             // 开始抽奖
                             animationSwitch = true;
-                            prizeBomb(prizeData,toPrizeUser);
-                            e.target.innerHTML = 'stop'
+                            e.target.innerHTML = 'stop';
+                            prizeBomb(prizeData,toPrizeUsers);
                         }else {
                             // 停止抽奖
                             animationSwitch = false;
                             e.target.innerHTML = 'start';
-                            let winningUsers = createWinningUsers(toPrizeUser);
+                            let winningUsers = createWinningUsers(toPrizeUsers);
                             paddingWinningUsers(winningUsers);
                             saveWinningUsersToServer(prizeData,winningUsers);
                         }
-                    })
-                },false)
-            })
-        });
+                        $.getJSON('http://120.26.53.25/wechat/Project/api/getToPrizeUser/',(toPrizeUser)=>{
+                            toPrizeUsers = toPrizeUser;
+                        })
+                    },false);
+                })
+            });
+        };
+
+        // 开启抽奖模块视图
+        DOC.querySelector('#giftBtn').addEventListener('click',()=>{
+            init();
+            hideOtherModule();
+            if(DOC.querySelector('main').style.display === 'none') DOC.querySelector('main').style.display = 'block';
+            DOC.querySelector('.prize').style.display = 'block';
+        },false);
     };
 
     /**
@@ -579,13 +610,30 @@
         },false);
     };
 
+    let toggleAlert = ()=>{
+        DOC.querySelector('.weui_dialog_alert').addEventListener('click',(event)=>{
+            let e = WIN.event || event;
+            if (e.target.nodeName === 'A' && DOC.querySelector('.weui_dialog_alert').style.display === 'block'){
+                DOC.querySelector('.weui_dialog_alert').style.display = 'none';
+            }else if (e.target.nodeName === 'A' && DOC.querySelector('.weui_dialog_alert').style.display === 'none'){
+                DOC.querySelector('.weui_dialog_alert').style.display = 'block';
+            }
+        },false)
+    };
+
+    // 加载界面
+    WIN.addEventListener('load',()=>{
+        DOC.querySelector('#loadingToast').style.display = 'none';
+    });
+
     index();
     signInView();
     messageView();
     countdown();
     prize();
-    vote();
+    // vote();
     footerAnimation();
     setting();
+    toggleAlert();
 
 })(document,window);

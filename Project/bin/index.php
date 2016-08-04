@@ -18,7 +18,11 @@ switch (trim($wechat->dataObj->MsgType)){
                 $wechat->sendTextMsg("php大法好！！！");
 
                 //    将用户加入数据库
-                $sqlCommand = "INSERT INTO wechat.users (openid) VALUES ('$toUserName');";
+
+//                获取头像和昵称
+                $userInfo = json_decode($wechat->getUserinfo($toUserName));
+                if ($userInfo->headimgurl ==='') $userInfo->headimgurl = 'http://o7qephszd.bkt.clouddn.com/wechatDefaultHeadImg.png';
+                $sqlCommand = "INSERT INTO users (openid, activeDate, headImgUrl, nickname) VALUES ('".$userInfo->openid."','".time()."','".$userInfo->headimgurl."','".$userInfo->nickname."');";
                 $sql->command($sqlCommand);
                 break;
 
@@ -75,8 +79,6 @@ switch (trim($wechat->dataObj->MsgType)){
                         break;
                 }
                 break;
-
-
 
             default:
                 echo '';

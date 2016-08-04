@@ -2,14 +2,8 @@
 require dirname(__FILE__).'/../../common/cross.php';
 require dirname(__FILE__).'/../../lib/Sql.php';
 
-/**
- * 获取加入活动的用户头像url和nickname
- * @param $wechat
- */
-function getPrize(){
-    $sql = new sql('120.26.53.25','root','root','wechat');
-    $selectCommand = 'SELECT * FROM prize;';
-    $results = $sql->query($selectCommand);
-    echo json_encode($results);
-}
-getPrize();
+//获取奖品的数据
+$sql = new sql();
+$selectCommand = 'SELECT * FROM prize;';
+$results = $sql->query($selectCommand);
+echo json_encode($results);

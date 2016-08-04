@@ -83,7 +83,7 @@ gulp.task('babel', () => {
         }))
 
         // 压缩js
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('./Project/public/js'));
 });
